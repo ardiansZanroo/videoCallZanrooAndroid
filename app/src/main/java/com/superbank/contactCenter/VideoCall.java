@@ -7,7 +7,7 @@ import android.content.Intent;
 
 public class VideoCall {
     private static final String TAG_URL = "url";
-    private static final String BASE_URL = "https://www.innovateasterisk.com/";
+    private static final String BASE_URL = "https://vcall.kyc-zanroodesk.my.id/client?id=";
 
     private final Activity activity;
 
@@ -21,8 +21,18 @@ public class VideoCall {
 
     public void start(String id) {
         String fullUrl = BASE_URL + id; // Concatenate the base URL with the dynamic part
+        startCall(fullUrl);
+    }
+
+    // Overloaded start method without id
+    public void start() {
+        startCall(BASE_URL); // Use the BASE_URL directly
+    }
+
+    // Common method to start the call
+    private void startCall(String url) {
         Intent intent = new Intent((Context)this.activity, contactCenter.class);
-        intent.putExtra("url", fullUrl); // Use the full URL here
+        intent.putExtra(TAG_URL, url); // Use the URL
         this.activity.startActivity(intent);
     }
 }
