@@ -7,7 +7,7 @@ import android.content.Intent;
 
 public class VideoCall {
     private static final String TAG_URL = "url";
-    private static final String BASE_URL = "https://vcall.kyc-zanroodesk.my.id/client?id=";
+    private static final String BASE_URL = "https://rfe.kyc-zanroodesk.my.id/client?id=";
 
     private final Activity activity;
 
