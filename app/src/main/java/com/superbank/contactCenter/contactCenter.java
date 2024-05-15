@@ -2,6 +2,7 @@ package com.superbank.contactCenter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.webkit.JavascriptInterface;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 
 public class contactCenter extends Activity {
     private static final String TAG_URL = "url";
+    private boolean isWebViewStopped = false;
 
     @SuppressLint({"SetJavaScriptEnabled"})
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,10 +33,10 @@ public class contactCenter extends Activity {
                 @Override
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
-                    webView.loadUrl("javascript:(function() {" +
+                    webView.loadUrl("javascript:(function(result) {" +
                             "window.WebViewApp = {" +
                             "    stopLoading: function() {" +
-                            "        window.Interface.stopWebView();" +
+                            "        window.Interface.stopWebView(result);" +
                             "    }" +
                             "};" +
                             "})()");
@@ -43,11 +45,16 @@ public class contactCenter extends Activity {
 
             webView.addJavascriptInterface(new Object() {
                 @JavascriptInterface
-                public void stopWebView() {
+                public void stopWebView(final String result) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             webView.stopLoading();
+                            isWebViewStopped = true;  // Set the flag to true when the WebView is stopped
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("result", result);
+                            setResult(Activity.RESULT_OK, resultIntent);
+                            finish();
                         }
                     });
                 }
@@ -63,5 +70,9 @@ public class contactCenter extends Activity {
 
             webView.loadUrl(url);
         }
+    }
+
+    public boolean isWebViewStopped() {
+        return isWebViewStopped;
     }
 }

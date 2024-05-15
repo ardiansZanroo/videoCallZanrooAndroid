@@ -1,6 +1,5 @@
 package com.superbank.contactCenter;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -31,8 +30,8 @@ public class VideoCall {
 
     // Common method to start the call
     private void startCall(String url) {
-        Intent intent = new Intent((Context)this.activity, contactCenter.class);
+        Intent intent = new Intent(activity, contactCenter.class);
         intent.putExtra(TAG_URL, url); // Use the URL
-        this.activity.startActivity(intent);
+        activity.startActivityForResult(intent, 1); // Use startActivityForResult instead of startActivity
     }
 }
