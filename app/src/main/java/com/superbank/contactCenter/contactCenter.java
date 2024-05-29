@@ -18,12 +18,13 @@ public class contactCenter extends Activity {
     private boolean isWebViewStopped = false;
 
     @SuppressLint({"SetJavaScriptEnabled"})
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo_layout);
         String url = getIntent().getStringExtra("url");
         if (url != null) {
-            final WebView webView = (WebView) findViewById(R.id.webview_content);
+            final WebView webView = findViewById(R.id.webview_content);
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             webSettings.setMediaPlaybackRequiresUserGesture(false);
@@ -35,7 +36,7 @@ public class contactCenter extends Activity {
                     super.onPageFinished(view, url);
                     webView.loadUrl("javascript:(function(result) {" +
                             "window.WebViewApp = {" +
-                            "    stopLoading: function() {" +
+                            "    stopLoading: function(result) {" +
                             "        window.Interface.stopWebView(result);" +
                             "    }" +
                             "};" +
@@ -50,7 +51,7 @@ public class contactCenter extends Activity {
                         @Override
                         public void run() {
                             webView.stopLoading();
-                            isWebViewStopped = true;  // Set the flag to true when the WebView is stopped
+                            isWebViewStopped = true;
                             Intent resultIntent = new Intent();
                             resultIntent.putExtra("result", result);
                             setResult(Activity.RESULT_OK, resultIntent);
