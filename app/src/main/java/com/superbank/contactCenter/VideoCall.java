@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import androidx.activity.result.contract.ActivityResultContract;
 
-public class VideoCall extends ActivityResultContract<String, String> {
+public class VideoCall extends ActivityResultContract<String, VideoCallResult> {
     private static final String TAG_URL = "url";
     private static final String BASE_URL = "https://rfe.kyc-zanroodesk.my.id/client?id=";
 
@@ -19,10 +19,14 @@ public class VideoCall extends ActivityResultContract<String, String> {
     }
 
     @Override
-    public String parseResult(int resultCode, Intent intent) {
+    public VideoCallResult parseResult(int resultCode, Intent intent) {
         if (resultCode != Activity.RESULT_OK) {
-            return null;
+            return VideoCallResult.CANCELED;
         }
-        return intent != null ? intent.getStringExtra("result") : null;
+        if (intent != null) {
+            String result = intent.getStringExtra("result");
+            return VideoCallResult.fromString(result);
+        }
+        return null;
     }
 }
