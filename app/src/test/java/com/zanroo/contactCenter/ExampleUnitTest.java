@@ -1,4 +1,4 @@
-package com.superbank.contactCenter;
+package com.zanroo.contactCenter;
 
 import org.junit.Test;
 
