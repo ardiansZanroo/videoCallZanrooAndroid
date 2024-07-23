@@ -1,4 +1,4 @@
-package com.superbank.contactCenter;
+package com.zanroo.contactCenter;
 
 public enum VideoCallResult {
     SUCCESS("success"),

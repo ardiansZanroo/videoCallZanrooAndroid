@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.superbank.contactCenter'
+    namespace 'com.zanroo.contactCenter'
     compileSdk 34
 
     defaultConfig {
