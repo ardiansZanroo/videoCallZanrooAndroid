@@ -12,5 +12,10 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
+    <application>
+        <activity
+            android:name="com.superbank.contactCenter.contactCenter"
+            android:exported="true"
+            android:label="Library Activity" />
+    </application>
 </manifest>
