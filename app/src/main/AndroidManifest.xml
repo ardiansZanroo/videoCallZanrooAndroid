@@ -17,6 +17,6 @@
             android:name="com.superbank.contactCenter.contactCenter"
             android:exported="true"
             android:label="Library Activity"
-            android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+            android:theme="@style/AppTheme.ZanrooNoActionBar" />
     </application>
 </manifest>
