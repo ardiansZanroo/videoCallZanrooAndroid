@@ -42,6 +42,29 @@ public class contactCenter extends Activity {
                             "};" +
                             "})()");
                 }
+/*
+                @Override
+                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                    super.onReceivedError(view, errorCode, description, failingUrl);
+                    handleLoadingError();
+                }
+
+                @Override
+                public void onReceivedHttpError(WebView view, WebResourceRequest request, android.webkit.WebResourceResponse errorResponse) {
+                    super.onReceivedHttpError(view, request, errorResponse);
+                    handleLoadingError();
+                }
+
+                private void handleLoadingError() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(contactCenter.this, "Failed to load the page. Please try again later.", Toast.LENGTH_SHORT).show();
+                            isWebViewStopped = true;
+                        }
+                    });
+                }
+*/
             });
 
             webView.addJavascriptInterface(new Object() {
@@ -71,6 +94,18 @@ public class contactCenter extends Activity {
 
             webView.loadUrl(url);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (webView != null) {
+            webView.stopLoading();
+            webView.clearHistory();
+            webView.clearCache(true);
+            webView.removeAllViews();
+            webView.destroy();
+        }
+        super.onBackPressed();
     }
 
     public boolean isWebViewStopped() {
