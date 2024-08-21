@@ -45,6 +45,7 @@ public class contactCenter extends Activity {
                             "};" +
                             "})()");
                 }
+/*
 
                 @Override
                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -63,11 +64,14 @@ public class contactCenter extends Activity {
                         @Override
                         public void run() {
                             Toast.makeText(contactCenter.this, "Failed to load the page. Please try again later.", Toast.LENGTH_SHORT).show();
+
                             webView.loadUrl("about:blank");
                             isWebViewStopped = true;
                         }
                     });
                 }
+*/
+
             });
 
             webView.addJavascriptInterface(new Object() {
@@ -103,7 +107,6 @@ public class contactCenter extends Activity {
     public void onBackPressed() {
         if (webView != null) {
             webView.stopLoading();
-            webView.loadUrl("about:blank");
             webView.clearHistory();
             webView.clearCache(true);
             webView.removeAllViews();
