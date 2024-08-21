@@ -8,14 +8,17 @@ import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 public class contactCenter extends Activity {
     private static final String TAG_URL = "url";
     private boolean isWebViewStopped = false;
+    private WebView webView;
 
     @SuppressLint({"SetJavaScriptEnabled"})
     @Override
@@ -24,7 +27,7 @@ public class contactCenter extends Activity {
         setContentView(R.layout.demo_layout);
         String url = getIntent().getStringExtra("url");
         if (url != null) {
-            final WebView webView = findViewById(R.id.webview_content);
+            webView = findViewById(R.id.webview_content);
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             webSettings.setMediaPlaybackRequiresUserGesture(false);
@@ -43,6 +46,7 @@ public class contactCenter extends Activity {
                             "})()");
                 }
 /*
+
                 @Override
                 public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                     super.onReceivedError(view, errorCode, description, failingUrl);
@@ -60,11 +64,14 @@ public class contactCenter extends Activity {
                         @Override
                         public void run() {
                             Toast.makeText(contactCenter.this, "Failed to load the page. Please try again later.", Toast.LENGTH_SHORT).show();
+
+                            webView.loadUrl("about:blank");
                             isWebViewStopped = true;
                         }
                     });
                 }
 */
+
             });
 
             webView.addJavascriptInterface(new Object() {
