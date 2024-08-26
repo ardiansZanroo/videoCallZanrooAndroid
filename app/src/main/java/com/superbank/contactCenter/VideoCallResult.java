@@ -3,7 +3,9 @@ package com.superbank.contactCenter;
 public enum VideoCallResult {
     SUCCESS("success"),
     DISCONNECTED("disconnected"),
-    CANCELED("canceled");
+    CANCELED("canceled"),
+    ERROR("error");
+
 
     private final String result;
 
