@@ -8,7 +8,7 @@ import androidx.activity.result.contract.ActivityResultContract;
 
 public class VideoCall extends ActivityResultContract<String, VideoCallResult> {
     private static final String TAG_URL = "url";
-    private static final String BASE_URL = "https://rfe.kyc-zanroodesk.my.id/client?id=";
+    private static final String BASE_URL = "https://ekyc-be.videocall.stg.super-id.net/client?id=";
 
     @Override
     public Intent createIntent(Context context, String input) {
