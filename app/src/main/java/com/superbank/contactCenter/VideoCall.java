@@ -8,11 +8,33 @@ import androidx.activity.result.contract.ActivityResultContract;
 
 public class VideoCall extends ActivityResultContract<String, VideoCallResult> {
     private static final String TAG_URL = "url";
-    private static final String BASE_URL = "https://ekyc-fe.videocall.stg.super-id.net/client?id=";
+    private String baseUrl;
+
+    // Enum to represent different environments
+    public enum Environment {
+        DEV("https://rfe.kyc-zanroodesk.my.id/client?id="),
+        STG("https://ekyc-fe.videocall.stg.super-id.net/client?id="),
+        PROD("https://ekyc-fe.videocall.stg.super-id.net/client?id=");
+
+        private final String url;
+
+        Environment(String url) {
+            this.url = url;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+    }
+
+    // Constructor to initialize with the selected environment
+    public VideoCall(Environment environment) {
+        this.baseUrl = environment.getUrl();  // Set the base URL according to the selected environment
+    }
 
     @Override
     public Intent createIntent(Context context, String input) {
-        String fullUrl = BASE_URL + input; // Concatenate the base URL with the dynamic part
+        String fullUrl = baseUrl + input; // Concatenate the base URL with the dynamic part
         Intent intent = new Intent(context, contactCenter.class);
         intent.putExtra(TAG_URL, fullUrl);
         return intent;
