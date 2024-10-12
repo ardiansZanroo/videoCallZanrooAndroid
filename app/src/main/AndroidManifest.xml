@@ -17,6 +17,8 @@
             android:name="com.superbank.contactCenter.contactCenter"
             android:exported="false"
             android:label="Library Activity"
-            android:theme="@style/AppTheme.ZanrooNoActionBar" />
+            android:theme="@style/AppTheme.ZanrooNoActionBar"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"  />
     </application>
 </manifest>
