@@ -19,6 +19,7 @@ public class contactCenter extends Activity {
     private static final String TAG_URL = "url";
     private boolean isWebViewStopped = false;
     private WebView webView;
+    private boolean isBackDisabled = false; // Variable to track if back button is disabled
 
     @SuppressLint({"SetJavaScriptEnabled"})
     @Override
@@ -41,38 +42,15 @@ public class contactCenter extends Activity {
                             "window.WebViewApp = {" +
                             "    stopLoading: function(result) {" +
                             "        window.Interface.stopWebView(result);" +
+                            "    }," +
+                            "    disableBackButton: function() {" +
+                            "        window.Interface.disableBack();" +
                             "    }" +
                             "};" +
                             "})()");
                 }
-/*
-
-                @Override
-                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                    super.onReceivedError(view, errorCode, description, failingUrl);
-                    handleLoadingError();
-                }
-
-                @Override
-                public void onReceivedHttpError(WebView view, WebResourceRequest request, android.webkit.WebResourceResponse errorResponse) {
-                    super.onReceivedHttpError(view, request, errorResponse);
-                    handleLoadingError();
-                }
-
-                private void handleLoadingError() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(contactCenter.this, "Failed to load the page. Please try again later.", Toast.LENGTH_SHORT).show();
-
-                            webView.loadUrl("about:blank");
-                            isWebViewStopped = true;
-                        }
-                    });
-                }
-*/
-
             });
+
 
             webView.addJavascriptInterface(new Object() {
                 @JavascriptInterface
@@ -82,10 +60,20 @@ public class contactCenter extends Activity {
                         public void run() {
                             webView.stopLoading();
                             isWebViewStopped = true;
+                            isBackDisabled = false;
                             Intent resultIntent = new Intent();
                             resultIntent.putExtra("result", result);
                             setResult(Activity.RESULT_OK, resultIntent);
                             finish();
+                        }
+                    });
+                }
+                @JavascriptInterface
+                public void disableBack() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            isBackDisabled = true; // Disable back button
                         }
                     });
                 }
@@ -103,16 +91,18 @@ public class contactCenter extends Activity {
         }
     }
 
-    @Override
+     @Override
     public void onBackPressed() {
-        if (webView != null) {
+        if (isBackDisabled) {
+//            Toast.makeText(this, "On backPress", Toast.LENGTH_LONG).show();
+        } else {
             webView.stopLoading();
             webView.clearHistory();
             webView.clearCache(true);
             webView.removeAllViews();
             webView.destroy();
+            super.onBackPressed();
         }
-        super.onBackPressed();
     }
 
     public boolean isWebViewStopped() {
