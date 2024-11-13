@@ -1,5 +1,6 @@
 package com.superbank.contactCenter;
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -84,6 +85,19 @@ public class contactCenter extends Activity {
                 public void onPermissionRequest(PermissionRequest request) {
                     if (Build.VERSION.SDK_INT >= 21)
                         request.grant(request.getResources());
+                }
+            });
+            webView.setWebChromeClient(new WebChromeClient() {
+                @Override
+                public void onPermissionRequest(PermissionRequest request) {
+                    if (Build.VERSION.SDK_INT >= 21)
+                        request.grant(request.getResources());
+                }
+
+                @Override
+                public Bitmap getDefaultVideoPoster() {
+                    // Load the static image from drawable
+                    return BitmapFactory.decodeResource(getResources(), R.drawable.video_poster);
                 }
             });
 
