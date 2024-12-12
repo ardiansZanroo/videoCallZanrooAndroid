@@ -14,7 +14,7 @@ public class VideoCall extends ActivityResultContract<String, VideoCallResult> {
     public enum Environment {
         DEV("https://rfe.kyc-zanroodesk.my.id/client?id="),
         STG("https://ekyc-fe.videocall.stg.super-id.net/client?id="),
-        PROD("https://ekyc-fe.videocall.stg.super-id.net/client?id=");
+        PROD("https://ekyc-fe.videocall.super-id.net/client?id=");
 
         private final String url;
 
