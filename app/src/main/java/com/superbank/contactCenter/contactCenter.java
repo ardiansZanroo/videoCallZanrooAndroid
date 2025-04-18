@@ -39,13 +39,16 @@ public class contactCenter extends Activity {
                 @Override
                 public void onPageFinished(WebView view, String url) {
                     super.onPageFinished(view, url);
-                    webView.loadUrl("javascript:(function(result) {" +
+                    webView.loadUrl("javascript:(function() {" +
                             "window.WebViewApp = {" +
                             "    stopLoading: function(result) {" +
                             "        window.Interface.stopWebView(result);" +
                             "    }," +
                             "    disableBackButton: function() {" +
                             "        window.Interface.disableBack();" +
+                            "    }," +
+                            "    getAppId: function() {" +
+                            "        return window.Interface.getAppId();" +
                             "    }" +
                             "};" +
                             "})()");
@@ -77,6 +80,11 @@ public class contactCenter extends Activity {
                             isBackDisabled = true; // Disable back button
                         }
                     });
+                }
+                @JavascriptInterface
+                public String getAppId() {
+                    // Retrieve the id from the Intent
+                    return getIntent().getStringExtra("id");
                 }
             }, "Interface");
 
