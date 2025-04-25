@@ -1,4 +1,5 @@
 package com.superbank.contactCenter;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.annotation.SuppressLint;
@@ -22,7 +23,7 @@ public class contactCenter extends Activity {
     private WebView webView;
     private boolean isBackDisabled = false; // Variable to track if back button is disabled
 
-    @SuppressLint({"SetJavaScriptEnabled"})
+    @SuppressLint({ "SetJavaScriptEnabled" })
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,13 +49,19 @@ public class contactCenter extends Activity {
                             "        window.Interface.disableBack();" +
                             "    }," +
                             "    getAppId: function() {" +
-                            "        return window.Interface.getAppId();" +
+                            "        return new Promise((resolve, reject) => {" +
+                            "            try {" +
+                            "                const appId = window.Interface.getAppId();" +
+                            "                resolve(appId);" +
+                            "            } catch (error) {" +
+                            "                reject(error);" +
+                            "            }" +
+                            "        });" +
                             "    }" +
                             "};" +
                             "})()");
                 }
             });
-
 
             webView.addJavascriptInterface(new Object() {
                 @JavascriptInterface
@@ -72,6 +79,7 @@ public class contactCenter extends Activity {
                         }
                     });
                 }
+
                 @JavascriptInterface
                 public void disableBack() {
                     runOnUiThread(new Runnable() {
@@ -81,6 +89,7 @@ public class contactCenter extends Activity {
                         }
                     });
                 }
+
                 @JavascriptInterface
                 public String getAppId() {
                     // Retrieve the id from the Intent
@@ -113,10 +122,10 @@ public class contactCenter extends Activity {
         }
     }
 
-     @Override
+    @Override
     public void onBackPressed() {
         if (isBackDisabled) {
-//            Toast.makeText(this, "On backPress", Toast.LENGTH_LONG).show();
+            // Toast.makeText(this, "On backPress", Toast.LENGTH_LONG).show();
         } else {
             webView.stopLoading();
             webView.clearHistory();
