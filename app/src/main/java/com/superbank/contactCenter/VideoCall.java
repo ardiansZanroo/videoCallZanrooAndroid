@@ -12,6 +12,7 @@ public class VideoCall extends ActivityResultContract<String, VideoCallResult> {
 
     // Enum to represent different environments
     public enum Environment {
+        LOCAL("http:localhost:3000/client?id="),
         DEV("https://rfe.kyc-zanroodesk.my.id/client?id="),
         STG("https://ekyc-fe.videocall.stg.super-id.net/client?id="),
         PROD("https://ekyc-fe.videocall.super-id.net/client?id=");
@@ -37,6 +38,7 @@ public class VideoCall extends ActivityResultContract<String, VideoCallResult> {
         String fullUrl = baseUrl + input; // Concatenate the base URL with the dynamic part
         Intent intent = new Intent(context, contactCenter.class);
         intent.putExtra(TAG_URL, fullUrl);
+        intent.putExtra("id", input); // Pass the id as an extra
         return intent;
     }
 
